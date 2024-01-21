@@ -237,6 +237,7 @@
                         <configuration>
                             <argLine>
                                 ${surefire.argline.opens}
+                                ${argLine}
                             </argLine>
                         </configuration>
                     </plugin>
