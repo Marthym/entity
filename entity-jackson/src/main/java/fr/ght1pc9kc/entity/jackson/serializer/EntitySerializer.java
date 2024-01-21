@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import fr.ght1pc9kc.entity.api.Entity;
+import fr.ght1pc9kc.entity.jackson.ex.EntitySerializationException;
 
 import java.io.IOException;
 
@@ -30,7 +31,7 @@ public class EntitySerializer<T> extends JsonSerializer<Entity<T>> {
             try {
                 jgen.writeObjectField(e.getKey(), e.getValue());
             } catch (IOException ex) {
-                throw new RuntimeException(ex);
+                throw new EntitySerializationException("Unable to write Entity self sub object key " + e.getKey(), ex);
             }
         });
 
