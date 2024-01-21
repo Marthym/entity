@@ -11,6 +11,13 @@
 
     <artifactId>entity-jackson</artifactId>
 
+    <properties>
+        <surefire.argline.opens>
+            --add-opens entity.jackson/fr.ght1pc9kc.entity.jackson.samples=com.fasterxml.jackson.databind
+            --add-opens entity.jackson/fr.ght1pc9kc.entity.jackson.samples=ALL-UNNAMED
+        </surefire.argline.opens>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>fr.ght1pc9kc</groupId>

@@ -5,12 +5,11 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import fr.ght1pc9kc.entity.api.Entity;
 import fr.ght1pc9kc.entity.jackson.EntityModule;
-import fr.ght1pc9kc.entity.jackson.Samples;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 
 class EntityDeserializerTest {
     private ObjectMapper tested;
@@ -23,19 +22,15 @@ class EntityDeserializerTest {
                 .registerModule(new EntityModule());
     }
 
-    @Test
-    void should_deserialize_entity() throws JsonProcessingException {
-        Entity<Samples.Simple> actual = this.tested.readValue("""
-                {
-                    "_id": "ID42",
-                    "_createdAt": "2024-01-20T15:06:42.546Z",
-                    "_createdBy": "okenobi",
-                    "message": "May the \\"force\\""
-                }
-                """, new TypeReference<>() {
-        });
+    @ParameterizedTest(name = "[{index}] {0}")
+    @MethodSource("fr.ght1pc9kc.entity.jackson.samples.Samples#providerForDeserializedSerialized")
+    void should_deserialize_entity(Object value, TypeReference<?> type, String json) throws JsonProcessingException {
+        Object actual = this.tested.readValue(json, type);
 
+        Class<?> expectedClass = tested.getTypeFactory().constructType(type).getRawClass();
         Assertions.assertThat(actual).isNotNull()
-                .isEqualTo(Samples.SIMPLE_WRAPPED);
+                .isInstanceOf(expectedClass)
+                .isEqualTo(value);
     }
+
 }

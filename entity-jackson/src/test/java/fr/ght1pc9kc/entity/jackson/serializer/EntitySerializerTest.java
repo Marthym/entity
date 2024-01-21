@@ -5,10 +5,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import fr.ght1pc9kc.entity.jackson.EntityModule;
-import fr.ght1pc9kc.entity.jackson.Samples;
 import net.javacrumbs.jsonunit.assertj.JsonAssertions;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 
 class EntitySerializerTest {
     private ObjectMapper tested;
@@ -21,18 +21,12 @@ class EntitySerializerTest {
                 .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
     }
 
-    @Test
-    void should_serialize_simple_object() throws JsonProcessingException {
+    @ParameterizedTest(name = "[{index}] {0}")
+    @MethodSource("fr.ght1pc9kc.entity.jackson.samples.Samples#providerForDeserializedSerialized")
+    void should_serialize_polymorphic_entity(Object entity, Object ignore, String expectedJson) throws JsonProcessingException {
         String actual = this.tested.writerWithDefaultPrettyPrinter()
-                .writeValueAsString(Samples.SIMPLE_WRAPPED);
+                .writeValueAsString(entity);
 
-        JsonAssertions.assertThatJson(actual).isEqualTo("""
-                {
-                    "_id": "ID42",
-                    "_createdAt": "2024-01-20T15:06:42.546Z",
-                    "_createdBy": "okenobi",
-                    "message": "May the \\"force\\""
-                }
-                """);
+        JsonAssertions.assertThatJson(actual).isEqualTo(expectedJson);
     }
 }
