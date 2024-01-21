@@ -19,9 +19,21 @@ public record Entity<T>(
         @NonNull Instant createdAt,
         @NonNull T self
 ) {
+    /**
+     * Main entity identifier
+     */
     public static final String IDENTIFIER = "_id";
+    /**
+     * The instant the entity was created
+     */
     public static final String CREATED_AT = "_createdAt";
+    /**
+     * The identifier of entity which create the entity
+     */
     public static final String CREATED_BY = "_createdBy";
+    /**
+     * The unknown creator defautl value
+     */
     public static final String NO_ONE = "_";
 
 

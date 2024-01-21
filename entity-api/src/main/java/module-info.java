@@ -1,3 +1,6 @@
+/**
+ * Module for access API classes
+ */
 module fr.ght1pc9kc.entity.api {
     requires static lombok;
     requires static org.jetbrains.annotations;

@@ -1,3 +1,6 @@
+/**
+ * Jackson module to add serializer and deserializer for Entity
+ */
 module fr.ght1pc9kc.entity.jackson {
     requires fr.ght1pc9kc.entity.api;
 

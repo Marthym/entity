@@ -14,18 +14,18 @@ import java.util.Map;
 /**
  * The Jackson module managing {@link Entity} type object
  *
- * <h3>Deserialization</h3>
+ * <h2>Deserialization</h2>
  * <p>Manage the {@link Entity} deserialization.</p>
  * <p>All field starting with "{@code _}" are considered as meta data and will be used for Entity,
  * all other fields are considered to belong to the self object</p>
- * <p>{@code _id}, {@code _createdAt} and {@code _createdBy} are mandatory in meta data if absent:
+ * <p>{@code _id}, {@code _createdAt} and {@code _createdBy} are mandatory in meta data if absent:</p>
  * <ul>
  *     <li>{@code _id}: throw {@link fr.ght1pc9kc.entity.jackson.ex.EntityDeserializationException}</li>
  *     <li>{@code _createdAt}: fill with {@link java.time.Instant#EPOCH}</li>
  *     <li>{@code _createdBy}: fill with {@link Entity#NO_ONE}</li>
- * </ul></p>
+ * </ul>
  *
- * <h3>Serialization</h3>
+ * <h2>Serialization</h2>
  * <p>{@link Entity#self()} was serialized as <strong>unwrapped</strong> object. All properties from Entity was considered
  * as meta data and was prefixed with {@code _}, properties from self object was serialized at the same leve "as is".</p>
  * <p>All Jackson annotations on the {@code self} object was read and used.</p>
