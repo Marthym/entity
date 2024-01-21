@@ -85,7 +85,7 @@ public class EntityDeserializer<T> extends JsonDeserializer<Entity<T>> implement
                 .map(JsonNode::asText).map(Instant::parse)
                 .orElse(Instant.EPOCH);
 
-        JsonNode selfNode = entityNode.get(Entity.SELF);
+        JsonNode selfNode = entityNode.get(Entity.SELF_PROPERTY);
         JsonNode selfContainedNode = (selfNode == null) ? wrappedNode : selfNode;
 
         JsonParser subParser = selfContainedNode.traverse(jp.getCodec());

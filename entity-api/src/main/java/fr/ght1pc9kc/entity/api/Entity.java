@@ -35,7 +35,7 @@ public record Entity<T>(
     /**
      * The serialized property name for self-contained value if not an object
      */
-    public static final String SELF = "_self";
+    public static final String SELF_PROPERTY = "_self";
     /**
      * The unknown creator defautl value
      */

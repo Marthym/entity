@@ -37,7 +37,7 @@ public class EntitySerializer<T> extends JsonSerializer<Entity<T>> {
                 }
             });
         } else {
-            jgen.writePOJOField(Entity.SELF, self);
+            jgen.writePOJOField(Entity.SELF_PROPERTY, self);
         }
 
         jgen.writeEndObject();
