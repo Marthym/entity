@@ -14,7 +14,7 @@ import java.util.Map;
 /**
  * The Jackson module managing {@link Entity} type object
  *
- * <h3>Deserialization</h2>
+ * <h3>Deserialization</h3>
  * <p>Manage the {@link Entity} deserialization.</p>
  * <p>All field starting with "{@code _}" are considered as meta data and will be used for Entity,
  * all other fields are considered to belong to the self object</p>
