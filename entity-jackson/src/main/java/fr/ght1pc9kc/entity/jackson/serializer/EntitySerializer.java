@@ -9,9 +9,10 @@ import fr.ght1pc9kc.entity.api.Entity;
 import fr.ght1pc9kc.entity.jackson.ex.EntitySerializationException;
 
 import java.io.IOException;
+import java.time.Instant;
 
 public class EntitySerializer<T> extends JsonSerializer<Entity<T>> {
-    private static final Entity<?> DUMMY = Entity.identify("", new Object());
+    private static final Entity<?> DUMMY = new Entity<>("", Entity.NO_ONE, Instant.EPOCH, new Object());
 
     @Override
     @SuppressWarnings("unchecked")
@@ -27,13 +28,17 @@ public class EntitySerializer<T> extends JsonSerializer<Entity<T>> {
         jgen.writeObject(value.createdAt());
         jgen.writeStringField(Entity.CREATED_BY, value.createdBy());
         JsonNode self = ((ObjectMapper) jgen.getCodec()).valueToTree(value.self());
-        self.fields().forEachRemaining(e -> {
-            try {
-                jgen.writeObjectField(e.getKey(), e.getValue());
-            } catch (IOException ex) {
-                throw new EntitySerializationException("Unable to write Entity self sub object key " + e.getKey(), ex);
-            }
-        });
+        if (self.isObject()) {
+            self.fields().forEachRemaining(e -> {
+                try {
+                    jgen.writeObjectField(e.getKey(), e.getValue());
+                } catch (IOException ex) {
+                    throw new EntitySerializationException("Unable to write Entity self sub object key " + e.getKey(), ex);
+                }
+            });
+        } else {
+            jgen.writePOJOField(Entity.SELF, self);
+        }
 
         jgen.writeEndObject();
     }

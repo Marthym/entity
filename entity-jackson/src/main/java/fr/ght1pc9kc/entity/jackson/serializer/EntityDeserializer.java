@@ -77,7 +77,7 @@ public class EntityDeserializer<T> extends JsonDeserializer<Entity<T>> implement
 
         String id = Optional.ofNullable(treeNode.remove(Entity.IDENTIFIER))
                 .map(JsonNode::asText)
-                .orElseThrow(() -> new EntityDeserializationException("'_id' is mandatory for Entity"));
+                .orElseThrow(() -> new EntityDeserializationException(Entity.IDENTIFIER + " is mandatory for Entity"));
         String createdBy = Optional.ofNullable(treeNode.remove(Entity.CREATED_BY))
                 .map(JsonNode::asText)
                 .orElse(Entity.NO_ONE);
@@ -85,7 +85,10 @@ public class EntityDeserializer<T> extends JsonDeserializer<Entity<T>> implement
                 .map(JsonNode::asText).map(Instant::parse)
                 .orElse(Instant.EPOCH);
 
-        JsonParser subParser = wrappedNode.traverse(jp.getCodec());
+        JsonNode selfNode = entityNode.get(Entity.SELF);
+        JsonNode selfContainedNode = (selfNode == null) ? wrappedNode : selfNode;
+
+        JsonParser subParser = selfContainedNode.traverse(jp.getCodec());
         subParser.nextToken();
         T wrapped = (T) wrappedDeserializer.deserialize(subParser, ctxt);
 
