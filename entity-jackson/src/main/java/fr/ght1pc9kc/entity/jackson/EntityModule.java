@@ -1,11 +1,15 @@
 package fr.ght1pc9kc.entity.jackson;
 
+import com.fasterxml.jackson.core.Version;
+import com.fasterxml.jackson.core.util.VersionUtil;
+import com.fasterxml.jackson.databind.Module;
 import com.fasterxml.jackson.databind.module.SimpleDeserializers;
-import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.databind.module.SimpleSerializers;
 import fr.ght1pc9kc.entity.api.Entity;
 import fr.ght1pc9kc.entity.jackson.serializer.EntityDeserializer;
 import fr.ght1pc9kc.entity.jackson.serializer.EntitySerializer;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
@@ -66,10 +70,21 @@ import java.util.Map;
  * }</pre>
  */
 @Slf4j
-public class EntityModule extends SimpleModule {
+@NoArgsConstructor
+@EqualsAndHashCode(callSuper = false)
+public class EntityModule extends Module {
+    @Override
+    public String getModuleName() {
+        return EntityModule.class.getSimpleName();
+    }
+
+    @Override
+    public Version version() {
+        return VersionUtil.parseVersion("1.0.0", EntityModule.class.getPackageName(), "jackson-entity-module");
+    }
+
     @Override
     public void setupModule(SetupContext context) {
-        super.setupModule(context);
         log.info("Configure Jackson Entity module ...");
         context.addDeserializers(new SimpleDeserializers(Map.of(
                 Entity.class, new EntityDeserializer<>()
