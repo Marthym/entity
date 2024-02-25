@@ -1,11 +1,15 @@
 package fr.ght1pc9kc.entity.jackson;
 
 import com.fasterxml.jackson.core.Version;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.core.util.VersionUtil;
 import com.fasterxml.jackson.databind.Module;
 import com.fasterxml.jackson.databind.module.SimpleDeserializers;
 import com.fasterxml.jackson.databind.module.SimpleSerializers;
 import fr.ght1pc9kc.entity.api.Entity;
+import fr.ght1pc9kc.entity.api.impl.BasicEntity;
+import fr.ght1pc9kc.entity.api.impl.ExtendedEntity;
+import fr.ght1pc9kc.entity.jackson.serializer.EntityContextualDeserializer;
 import fr.ght1pc9kc.entity.jackson.serializer.EntityDeserializer;
 import fr.ght1pc9kc.entity.jackson.serializer.EntitySerializer;
 import lombok.EqualsAndHashCode;
@@ -86,11 +90,19 @@ public class EntityModule extends Module {
     @Override
     public void setupModule(SetupContext context) {
         log.info("Configure Jackson Entity module ...");
+        EntityContextualDeserializer deserializer = new EntityContextualDeserializer();
         context.addDeserializers(new SimpleDeserializers(Map.of(
-                Entity.class, new EntityDeserializer<>()
+                Entity.class, deserializer,
+                BasicEntity.class, deserializer,
+                ExtendedEntity.class, deserializer
         )));
         context.addSerializers(new SimpleSerializers(List.of(
-                new EntitySerializer<>()
+                new EntitySerializer<>(context.getTypeFactory().constructType(new TypeReference<Entity<?>>() {
+                })),
+                new EntitySerializer<>(context.getTypeFactory().constructType(new TypeReference<BasicEntity<?>>() {
+                })),
+                new EntitySerializer<>(context.getTypeFactory().constructType(new TypeReference<ExtendedEntity<?, ? extends Enum<?>>>() {
+                }))
         )));
     }
 }

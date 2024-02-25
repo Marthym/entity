@@ -1,32 +1,37 @@
 package fr.ght1pc9kc.entity.jackson.serializer;
 
 import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializerProvider;
+import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 import fr.ght1pc9kc.entity.api.Entity;
+import fr.ght1pc9kc.entity.api.impl.ExtendedEntity;
 import fr.ght1pc9kc.entity.jackson.ex.EntitySerializationException;
 
 import java.io.IOException;
-import java.time.Instant;
 
-public class EntitySerializer<T> extends JsonSerializer<Entity<T>> {
-    private static final Entity<?> DUMMY = new Entity<>("", Entity.NO_ONE, Instant.EPOCH, new Object());
-
-    @Override
-    @SuppressWarnings("unchecked")
-    public Class<Entity<T>> handledType() {
-        return (Class<Entity<T>>) DUMMY.getClass();
+public class EntitySerializer<T> extends StdSerializer<Entity<T>> {
+    public EntitySerializer(JavaType type) {
+        super(type);
     }
 
     @Override
     public void serialize(Entity<T> value, JsonGenerator jgen, SerializerProvider serializers) throws IOException {
         jgen.writeStartObject();
-        jgen.writeStringField(Entity.IDENTIFIER, value.id());
-        jgen.writeFieldName(Entity.CREATED_AT);
-        jgen.writeObject(value.createdAt());
-        jgen.writeStringField(Entity.CREATED_BY, value.createdBy());
+        jgen.writeStringField(EntityModuleConstant.IDENTIFIER, value.id());
+        if (value instanceof ExtendedEntity<T, ?> extendedEntity) {
+            extendedEntity.metas().forEach((metaName, metaValue) -> {
+                try {
+                    jgen.writeFieldName(EntityModuleConstant.META_PREFIX + metaName);
+                    jgen.writeObject(metaValue);
+                } catch (IOException e) {
+                    throw new EntitySerializationException("Unable to serialize meta " + metaName, e);
+                }
+            });
+        }
+
         JsonNode self = ((ObjectMapper) jgen.getCodec()).valueToTree(value.self());
         if (self.isObject()) {
             self.fields().forEachRemaining(e -> {
@@ -37,7 +42,7 @@ public class EntitySerializer<T> extends JsonSerializer<Entity<T>> {
                 }
             });
         } else {
-            jgen.writePOJOField(Entity.SELF_PROPERTY, self);
+            jgen.writePOJOField(EntityModuleConstant.SELF_PROPERTY, self);
         }
 
         jgen.writeEndObject();
