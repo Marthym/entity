@@ -4,7 +4,7 @@
 
     <groupId>fr.ght1pc9kc</groupId>
     <artifactId>entity</artifactId>
-    <version>1.0.1</version>
+    <version>1.2.0</version>
     <packaging>pom</packaging>
 
     <name>Entity</name>
@@ -22,7 +22,7 @@
         <connection>scm:git:git@github.com:Marthym/entity.git</connection>
         <developerConnection>scm:git:git@github.com:Marthym/entity.git</developerConnection>
         <url>https://github.com/Marthym/entity</url>
-        <tag>1.0.1</tag>
+        <tag>1.2.0</tag>
     </scm>
 
     <modules>

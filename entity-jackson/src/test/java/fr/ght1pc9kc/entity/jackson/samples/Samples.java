@@ -3,46 +3,49 @@ package fr.ght1pc9kc.entity.jackson.samples;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import fr.ght1pc9kc.entity.api.Entity;
+import fr.ght1pc9kc.entity.api.impl.ExtendedEntity;
 import org.junit.jupiter.params.provider.Arguments;
 
 import java.time.Instant;
 import java.util.List;
 import java.util.stream.Stream;
 
+import static fr.ght1pc9kc.entity.jackson.samples.DefaultMetaProperties.createdAt;
+import static fr.ght1pc9kc.entity.jackson.samples.DefaultMetaProperties.createdBy;
+
+@SuppressWarnings("unused")
 public abstract class Samples {
     public static final Entity<String> STRING_ENTITY = Entity
             .identify("May the \"force\"")
-            .createdAt(Instant.parse("2024-01-20T15:06:42.546Z"))
-            .createdBy("okenobi")
             .withId("ID42");
 
     public static final Entity<List<String>> LIST_ENTITY = Entity
             .identify(List.of("May the \"force\""))
-            .createdAt(Instant.parse("2024-01-20T15:06:42.546Z"))
-            .createdBy("okenobi")
+            .meta(createdAt, Instant.parse("2024-01-20T15:06:42.546Z"))
+            .meta(createdBy, "okenobi")
             .withId("ID42");
 
     public static final Entity<Simple> SIMPLE_WRAPPED = Entity
             .identify(new Simple("May the \"force\""))
-            .createdAt(Instant.parse("2024-01-20T15:06:42.546Z"))
-            .createdBy("okenobi")
+            .meta(createdAt, Instant.parse("2024-01-20T15:06:42.546Z"))
+            .meta(createdBy, "okenobi")
             .withId("ID42");
 
     public static final Entity<Saber> POLYMORPHIC_ENTITY_1 = Entity
             .<Saber>identify(new DarkSaber(null))
-            .createdAt(Instant.parse("2024-01-20T15:06:42.546Z"))
-            .createdBy("TarreVizsla")
+            .meta(createdAt, Instant.parse("2024-01-20T15:06:42.546Z"))
+            .meta(createdBy, "TarreVizsla")
             .withId("DARKSABER");
 
     public static final Entity<Saber> POLYMORPHIC_ENTITY_2 = Entity
             .<Saber>identify(new LightSaber(Color.GREEN, 1))
-            .createdAt(Instant.parse("2024-01-20T15:06:42.546Z"))
-            .createdBy("okenobi")
+            .meta(createdAt, Instant.parse("2024-01-20T15:06:42.546Z"))
+            .meta(createdBy, "okenobi")
             .withId("LIGHTSABER");
 
     public static Stream<Arguments> providerForDeserializedSerialized() {
         return Stream.of(
-                Arguments.of(Samples.LIST_ENTITY, new TypeReference<Entity<List<String>>>() {
+                Arguments.of(Samples.LIST_ENTITY, new TypeReference<ExtendedEntity<List<String>, DefaultMetaProperties>>() {
                 }, """
                         {
                             "_id": "ID42",
@@ -55,12 +58,10 @@ public abstract class Samples {
                 }, """
                         {
                             "_id": "ID42",
-                            "_createdAt": "2024-01-20T15:06:42.546Z",
-                            "_createdBy": "okenobi",
                             "_self": "May the \\"force\\""
                         }
                         """),
-                Arguments.of(Samples.SIMPLE_WRAPPED, new TypeReference<Entity<Simple>>() {
+                Arguments.of(Samples.SIMPLE_WRAPPED, new TypeReference<ExtendedEntity<Simple, DefaultMetaProperties>>() {
                 }, """
                         {
                             "_id": "ID42",
@@ -69,7 +70,7 @@ public abstract class Samples {
                             "message": "May the \\"force\\""
                         }
                         """),
-                Arguments.of(Samples.POLYMORPHIC_ENTITY_1, new TypeReference<Entity<Saber>>() {
+                Arguments.of(Samples.POLYMORPHIC_ENTITY_1, new TypeReference<ExtendedEntity<Saber, DefaultMetaProperties>>() {
                 }, """
                         {
                             "_id": "DARKSABER",
@@ -79,7 +80,7 @@ public abstract class Samples {
                             "color": "SHADOW"
                         }
                         """),
-                Arguments.of(Samples.POLYMORPHIC_ENTITY_2, new TypeReference<Entity<Saber>>() {
+                Arguments.of(Samples.POLYMORPHIC_ENTITY_2, new TypeReference<ExtendedEntity<Saber, DefaultMetaProperties>>() {
                 }, """
                         {
                             "_id": "LIGHTSABER",
@@ -91,7 +92,7 @@ public abstract class Samples {
                         }
                         """),
                 Arguments.of(List.of(Samples.POLYMORPHIC_ENTITY_1, Samples.POLYMORPHIC_ENTITY_2),
-                        new TypeReference<List<Entity<Saber>>>() {
+                        new TypeReference<List<ExtendedEntity<Saber, DefaultMetaProperties>>>() {
                         }, """
                                 [{
                                     "_id": "DARKSABER",
