@@ -8,7 +8,7 @@ import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import fr.ght1pc9kc.entity.api.Entity;
-import fr.ght1pc9kc.entity.jackson.TypedMeta;
+import fr.ght1pc9kc.entity.api.TypedMeta;
 import fr.ght1pc9kc.entity.api.impl.BasicEntity;
 import fr.ght1pc9kc.entity.api.impl.ExtendedEntity;
 import fr.ght1pc9kc.entity.jackson.ex.EntityDeserializationException;

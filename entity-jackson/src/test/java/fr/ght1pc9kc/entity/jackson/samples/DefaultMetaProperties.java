@@ -1,6 +1,6 @@
 package fr.ght1pc9kc.entity.jackson.samples;
 
-import fr.ght1pc9kc.entity.jackson.TypedMeta;
+import fr.ght1pc9kc.entity.api.TypedMeta;
 
 import java.time.Instant;
 
