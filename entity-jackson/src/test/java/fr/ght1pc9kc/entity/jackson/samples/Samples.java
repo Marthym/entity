@@ -10,6 +10,9 @@ import java.time.Instant;
 import java.util.List;
 import java.util.stream.Stream;
 
+import static fr.ght1pc9kc.entity.jackson.samples.DefaultMetaProperties.createdAt;
+import static fr.ght1pc9kc.entity.jackson.samples.DefaultMetaProperties.createdBy;
+
 @SuppressWarnings("unused")
 public abstract class Samples {
     public static final Entity<String> STRING_ENTITY = Entity
@@ -18,26 +21,26 @@ public abstract class Samples {
 
     public static final Entity<List<String>> LIST_ENTITY = Entity
             .identify(List.of("May the \"force\""))
-            .meta(DefaultMetaProperties.createdAt, Instant.parse("2024-01-20T15:06:42.546Z"))
-            .meta(DefaultMetaProperties.createdBy, "okenobi")
+            .meta(createdAt, Instant.parse("2024-01-20T15:06:42.546Z"))
+            .meta(createdBy, "okenobi")
             .withId("ID42");
 
     public static final Entity<Simple> SIMPLE_WRAPPED = Entity
             .identify(new Simple("May the \"force\""))
-            .meta(DefaultMetaProperties.createdAt, Instant.parse("2024-01-20T15:06:42.546Z"))
-            .meta(DefaultMetaProperties.createdBy, "okenobi")
+            .meta(createdAt, Instant.parse("2024-01-20T15:06:42.546Z"))
+            .meta(createdBy, "okenobi")
             .withId("ID42");
 
     public static final Entity<Saber> POLYMORPHIC_ENTITY_1 = Entity
             .<Saber>identify(new DarkSaber(null))
-            .meta(DefaultMetaProperties.createdAt, Instant.parse("2024-01-20T15:06:42.546Z"))
-            .meta(DefaultMetaProperties.createdBy, "TarreVizsla")
+            .meta(createdAt, Instant.parse("2024-01-20T15:06:42.546Z"))
+            .meta(createdBy, "TarreVizsla")
             .withId("DARKSABER");
 
     public static final Entity<Saber> POLYMORPHIC_ENTITY_2 = Entity
             .<Saber>identify(new LightSaber(Color.GREEN, 1))
-            .meta(DefaultMetaProperties.createdAt, Instant.parse("2024-01-20T15:06:42.546Z"))
-            .meta(DefaultMetaProperties.createdBy, "okenobi")
+            .meta(createdAt, Instant.parse("2024-01-20T15:06:42.546Z"))
+            .meta(createdBy, "okenobi")
             .withId("LIGHTSABER");
 
     public static Stream<Arguments> providerForDeserializedSerialized() {

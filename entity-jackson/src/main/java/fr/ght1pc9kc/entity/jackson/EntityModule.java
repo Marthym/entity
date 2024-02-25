@@ -10,7 +10,6 @@ import fr.ght1pc9kc.entity.api.Entity;
 import fr.ght1pc9kc.entity.api.impl.BasicEntity;
 import fr.ght1pc9kc.entity.api.impl.ExtendedEntity;
 import fr.ght1pc9kc.entity.jackson.serializer.EntityContextualDeserializer;
-import fr.ght1pc9kc.entity.jackson.serializer.EntityDeserializer;
 import fr.ght1pc9kc.entity.jackson.serializer.EntitySerializer;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -26,12 +25,6 @@ import java.util.Map;
  * <p>Manage the {@link Entity} deserialization.</p>
  * <p>All field starting with "{@code _}" are considered as meta data and will be used for Entity,
  * all other fields are considered to belong to the self object</p>
- * <p>{@code _id}, {@code _createdAt} and {@code _createdBy} are mandatory in meta data if absent:</p>
- * <ul>
- *     <li>{@code _id}: throw {@link fr.ght1pc9kc.entity.jackson.ex.EntityDeserializationException}</li>
- *     <li>{@code _createdAt}: fill with {@link java.time.Instant#EPOCH}</li>
- *     <li>{@code _createdBy}: fill with {@link Entity#NO_ONE}</li>
- * </ul>
  *
  * <h2>Serialization</h2>
  * <p>{@link Entity#self()} was serialized as <strong>unwrapped</strong> object. All properties from Entity was considered
@@ -43,12 +36,10 @@ import java.util.Map;
  *
  * <p>The entity :</p>
  * <pre>{@code
- *    Entity.<Saber>builder()
- *             .id("LIGHTSABER")
- *             .createdAt(Instant.parse("2024-01-20T15:06:42.546Z"))
- *             .createdBy("okenobi")
- *             .self(new LightSaber(Color.GREEN, 1))
- *             .build()
+ *    Entity.<Saber>identify(new LightSaber(Color.GREEN, 1))
+ *          .meta(createdAt, Instant.parse("2024-01-20T15:06:42.546Z"))
+ *          .meta(createdBy, "okenobi")
+ *          .withId("LIGHTSABER");
  * }</pre>
  * <p>become</p>
  * <pre>

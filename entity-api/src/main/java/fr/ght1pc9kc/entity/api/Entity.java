@@ -1,12 +1,19 @@
 package fr.ght1pc9kc.entity.api;
 
 import fr.ght1pc9kc.entity.api.builders.BasicEntityBuilder;
+import fr.ght1pc9kc.entity.api.impl.BasicEntity;
+import fr.ght1pc9kc.entity.api.impl.ExtendedEntity;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 import java.util.Optional;
 
-public interface Entity<T> {
+/**
+ * Entity interface. This is recommended to use it.
+ *
+ * @param <T>
+ */
+public sealed interface Entity<T> permits BasicEntity, ExtendedEntity {
     String id();
 
     <M> Optional<M> meta(Enum<?> property, Class<M> type);

@@ -7,6 +7,10 @@
 **Entity** is a small library that handles the notion of model entity. **Entity** offers an elegant way of working with
 business objects that may or may not have an identifier.
 
+The entity can hold, or not, some metadata.
+For example ID of the user who creates the entity, the date of creation, the last update, ...
+This metadata was embedded through an EnumMap, the most efficient structure to store unknown number of key/value pairs.
+
 The jackson package offers a module for serializing and deserializing these entities in a flat manner.
 
 ## Installation
@@ -40,18 +44,25 @@ compile "fr.ght1pc9kc:entity-jackson:VERSION"
 
 ```java
 import fr.ght1pc9kc.entity.api.Entity;
+import java.time.Instant;
+
+import static fr.ght1pc9kc.demo.DefaultMeta.createdBy;
+import static fr.ght1pc9kc.demo.DefaultMeta.createdAt;
+
+Entity<String> basic = Entity.identify("May the force")
+        .withId("4TH");
 
 Entity<String> simple = Entity.identify("May the force")
-        .createdBy("Yoda")
-        .createdAt(createdAt)
+        .meta(createdBy, "Yoda")
+        .meta(createdAt, Instant.now())
         .withId("4TH");
 
 Entity<String> verySimple = Entity.identify("May the force").withId("4TH");
 
 Entity<Saber> POLYMORPHIC_ENTITY = Entity
         .<Saber>identify(new LightSaber(Color.GREEN, 1))
-        .createdAt(Instant.parse("2024-01-20T15:06:42.546Z"))
-        .createdBy("okenobi")
+        .meta(createdAt, Instant.parse("2024-01-20T15:06:42.546Z"))
+        .meta(createdBy, "okenobi")
         .withId("LIGHTSABER");
 ```
 

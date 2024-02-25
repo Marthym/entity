@@ -8,7 +8,7 @@ import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import fr.ght1pc9kc.entity.api.Entity;
-import fr.ght1pc9kc.entity.api.TypedMeta;
+import fr.ght1pc9kc.entity.jackson.TypedMeta;
 import fr.ght1pc9kc.entity.api.impl.BasicEntity;
 import fr.ght1pc9kc.entity.api.impl.ExtendedEntity;
 import fr.ght1pc9kc.entity.jackson.ex.EntityDeserializationException;
@@ -21,6 +21,13 @@ import java.util.Optional;
  * <p>Manage the {@link Entity}, {@link BasicEntity} and {@link ExtendedEntity} deserialization.</p>
  * <p>All field starting with "{@code _}" are considered as meta data and will be used for Entity,
  * all other fields are considered to belong to the self object</p>
+ *
+ * <p>{@link Entity} and {@link BasicEntity} are always deserialize as {@link BasicEntity}. To get a
+ * {@link ExtendedEntity} with meta it is necessary to explicitly specify</p>
+ * <pre>{@code
+ * ObjectMapper mapper = new ObjectMapper();
+ * Entity<SelfObject> entity = mapper.readValue(json, new TypeReference<ExtendedEntity<SelfObject, MetaEnum>>() {});
+ * }</pre>
  *
  * @param <T> The type of {@code self} object in {@link Entity}
  */
