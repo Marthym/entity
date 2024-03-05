@@ -7,6 +7,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 import java.util.Optional;
+import java.util.function.Function;
 
 /**
  * Entity interface. This is recommended to use it.
@@ -23,6 +24,8 @@ public sealed interface Entity<T> permits BasicEntity, ExtendedEntity {
     }
 
     T self();
+
+    <S> Entity<S> convert(Function<T, S> converter);
 
     /**
      * Give the builder to create entity
