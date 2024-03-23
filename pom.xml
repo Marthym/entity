@@ -9,7 +9,7 @@
 
     <name>Entity</name>
     <description>
-        Entity is a very simple and light library to manage persistable objects and theirs meta data.
+        Entity is a simple and lightweight library to manage persistent objects and theirs meta data.
     </description>
     <url>https://github.com/Marthym/entity</url>
     <licenses>
