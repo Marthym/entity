@@ -4,6 +4,8 @@
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=Marthym_entity&metric=coverage)](https://sonarcloud.io/dashboard?id=Marthym_entity)
 [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=Marthym_entity&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=Marthym_entity)
 
+<img src="favicon.png" alt="Size Limit CLI" align="right" style="float: right; margin: auto; width: 100px">
+
 **Entity** is a small library that handles the notion of model entity. **Entity** offers an elegant way of working with
 business objects that may or may not have an identifier.
 
