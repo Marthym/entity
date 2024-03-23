@@ -4,12 +4,12 @@
 
     <groupId>fr.ght1pc9kc</groupId>
     <artifactId>entity</artifactId>
-    <version>1.2.0</version>
+    <version>1.2.1</version>
     <packaging>pom</packaging>
 
     <name>Entity</name>
     <description>
-        Entity is a very simple and light library to manage persistable objects and theirs meta data.
+        Entity is a simple and lightweight library to manage persistent objects and theirs meta data.
     </description>
     <url>https://github.com/Marthym/entity</url>
     <licenses>
@@ -22,7 +22,7 @@
         <connection>scm:git:git@github.com:Marthym/entity.git</connection>
         <developerConnection>scm:git:git@github.com:Marthym/entity.git</developerConnection>
         <url>https://github.com/Marthym/entity</url>
-        <tag>1.2.0</tag>
+        <tag>1.2.1</tag>
     </scm>
 
     <modules>

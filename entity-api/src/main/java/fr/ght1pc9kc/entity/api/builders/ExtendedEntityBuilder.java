@@ -27,11 +27,13 @@ public final class ExtendedEntityBuilder<T, E extends Enum<E>> {
      * Add meta-information to the {@link Entity}
      *
      * @param property An Enum value
-     * @param value    The value of property
+     * @param value    The value of property, if null the property is not added
      * @return The {@link ExtendedEntityBuilder}
      */
     public ExtendedEntityBuilder<T, E> meta(E property, Object value) {
-        this.metas.put(property, value);
+        if (value != null) {
+            this.metas.put(property, value);
+        }
         return this;
     }
 

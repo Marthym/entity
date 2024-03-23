@@ -4,6 +4,7 @@ import fr.ght1pc9kc.entity.api.Entity;
 import lombok.NonNull;
 
 import java.util.Optional;
+import java.util.function.Function;
 
 /**
  * Hold the standard Persistence information
@@ -16,5 +17,10 @@ public record BasicEntity<T>(@NonNull String id,
     @Override
     public <M> Optional<M> meta(Enum<?> property, Class<M> type) {
         return Optional.empty();
+    }
+
+    @Override
+    public <S> Entity<S> convert(Function<T, S> converter) {
+        return new BasicEntity<>(id(), converter.apply(self()));
     }
 }
