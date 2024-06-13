@@ -11,6 +11,7 @@ import fr.ght1pc9kc.entity.api.Entity;
 import fr.ght1pc9kc.entity.api.TypedMeta;
 import fr.ght1pc9kc.entity.api.impl.BasicEntity;
 import fr.ght1pc9kc.entity.api.impl.ExtendedEntity;
+import fr.ght1pc9kc.entity.jackson.EntityModuleConstant;
 import fr.ght1pc9kc.entity.jackson.ex.EntityDeserializationException;
 
 import java.io.IOException;

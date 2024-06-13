@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 import fr.ght1pc9kc.entity.api.Entity;
 import fr.ght1pc9kc.entity.api.impl.ExtendedEntity;
+import fr.ght1pc9kc.entity.jackson.EntityModuleConstant;
 import fr.ght1pc9kc.entity.jackson.ex.EntitySerializationException;
 
 import java.io.IOException;
