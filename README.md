@@ -31,6 +31,11 @@ Use the package manager [maven](https://maven.apache.org/) to install entity.
     <artifactId>entity-jackson</artifactId>
     <version>VERSION</version>
 </dependency>
+<dependency>
+    <groupId>fr.ght1pc9kc</groupId>
+    <artifactId>entity-graphql</artifactId>
+    <version>VERSION</version>
+</dependency>
 ```
 
 for gradle
@@ -38,6 +43,7 @@ for gradle
 ```groovy
 compile "fr.ght1pc9kc:entity-api:VERSION"
 compile "fr.ght1pc9kc:entity-jackson:VERSION"
+compile "fr.ght1pc9kc:entity-graphql:VERSION"
 ```
 
 ## Usage
@@ -93,6 +99,28 @@ more beautiful json.
   "@type": "LIGHT",
   "blade": 1,
   "color": "GREEN"
+}
+```
+
+### Use GrapQL DataFetcher module
+
+In Spring Boot, create a configuration classe into your module 
+
+```java
+@Slf4j
+@Configuration
+public class MyObjectEntityConfiguration {
+    @Bean
+    public RuntimeWiringConfigurer customRuntimeWiringConfigurer(ObjectMapper mapper) {
+        // Create the DataFetcher by passing the configured Jackson Object Mapper
+        DataFetcher<Object> dataFetcher = new EntityDataFetcher(mapper);
+        // Create a TypeResolver which detect Entity object
+        TypeResolver typeResolver = new EntityTypeResolver();
+
+        // customize WiringConfigurer to map possible Entity self object to use EntityDataFetcher
+        return wiringBuilder -> wiringBuilder
+                .type(MyObject.class.getSimpleName(), builder -> builder.defaultDataFetcher(dataFetcher).typeResolver(typeResolver));
+    }
 }
 ```
 
