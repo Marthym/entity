@@ -1,6 +1,7 @@
 package fr.ght1pc9kc.entity.api.impl;
 
 import fr.ght1pc9kc.entity.api.Entity;
+import fr.ght1pc9kc.entity.api.builders.BasicEntityBuilder;
 import lombok.NonNull;
 
 import java.util.Optional;
@@ -22,5 +23,10 @@ public record BasicEntity<T>(@NonNull String id,
     @Override
     public <S> Entity<S> convert(Function<T, S> converter) {
         return new BasicEntity<>(id(), converter.apply(self()));
+    }
+
+    @Override
+    public <S extends Enum<S>> Entity<T> withMeta(S key, Object value) {
+        return new BasicEntityBuilder<>(self()).meta(key, value).withId(id());
     }
 }

@@ -27,6 +27,8 @@ public sealed interface Entity<T> permits BasicEntity, ExtendedEntity {
 
     <S> Entity<S> convert(Function<T, S> converter);
 
+    <S extends Enum<S>> Entity<T> withMeta(S key, Object value);
+
     /**
      * Give the builder to create entity
      *
