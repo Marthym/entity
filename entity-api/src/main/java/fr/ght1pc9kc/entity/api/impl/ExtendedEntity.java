@@ -1,6 +1,7 @@
 package fr.ght1pc9kc.entity.api.impl;
 
 import fr.ght1pc9kc.entity.api.Entity;
+import fr.ght1pc9kc.entity.api.builders.ExtendedEntityBuilder;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.EnumMap;
@@ -29,7 +30,17 @@ public record ExtendedEntity<T, E extends Enum<E>>(
     }
 
     @Override
+    public <S extends Enum<S>> Entity<T> withMeta(S key, Object value) {
+        E validKey = Enum.valueOf(metas.keySet().iterator().next().getDeclaringClass(), key.name());
+        ExtendedEntityBuilder<T, E> builder = new ExtendedEntityBuilder<>(self(), validKey.getDeclaringClass());
+        this.metas.forEach(builder::meta);
+        builder.meta(validKey, value);
+        return builder.withId(id());
+    }
+
+    @Override
     public EnumMap<E, Object> metas() {
         return new EnumMap<>(metas);
     }
+
 }
