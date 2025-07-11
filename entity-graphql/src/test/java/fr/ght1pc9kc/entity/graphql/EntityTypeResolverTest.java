@@ -4,6 +4,7 @@ import fr.ght1pc9kc.entity.api.Entity;
 import fr.ght1pc9kc.entity.api.TypedMeta;
 import graphql.TypeResolutionEnvironment;
 import graphql.execution.TypeResolutionParameters;
+import graphql.introspection.Introspection;
 import graphql.schema.GraphQLDirective;
 import graphql.schema.GraphQLFieldDefinition;
 import graphql.schema.GraphQLObjectType;
@@ -37,7 +38,9 @@ class EntityTypeResolverTest {
                                 .name("name")
                                 .type(GraphQLTypeReference.typeRef("String"))
                                 .build()).build())
-                        .additionalDirective(GraphQLDirective.newDirective().name("directive_test").build())
+                        .additionalDirective(GraphQLDirective.newDirective().name("directive_test")
+                                .validLocation(Introspection.DirectiveLocation.SCALAR)
+                                .build())
                         .build())
                 .build();
 
@@ -61,7 +64,8 @@ class EntityTypeResolverTest {
                                 .name("name")
                                 .type(GraphQLTypeReference.typeRef("String"))
                                 .build()).build())
-                        .additionalDirective(GraphQLDirective.newDirective().name("directive_test").build())
+                        .additionalDirective(GraphQLDirective.newDirective().name("directive_test")
+                                .validLocation(Introspection.DirectiveLocation.SCALAR).build())
                         .build())
                 .build();
 
