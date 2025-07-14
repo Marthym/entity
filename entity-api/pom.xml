@@ -4,9 +4,10 @@
     <parent>
         <groupId>fr.ght1pc9kc</groupId>
         <artifactId>entity</artifactId>
-        <version>1.3.3-SNAPSHOT</version>
+        <version>1.3.3</version>
     </parent>
 
+    <name>Entity API</name>
     <artifactId>entity-api</artifactId>
 
     <dependencies>
