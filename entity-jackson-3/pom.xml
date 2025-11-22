@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>fr.ght1pc9kc</groupId>
@@ -7,12 +8,13 @@
         <version>1.4.0-SNAPSHOT</version>
     </parent>
 
-    <name>Entity for GraphQL</name>
-    <artifactId>entity-graphql</artifactId>
+    <name>Entity for Jackson 3</name>
+    <artifactId>entity-jackson-3</artifactId>
 
     <properties>
         <surefire.argline.opens>
-            --add-opens fr.ght1pc9kc.entity.graphql/fr.ght1pc9kc.entity.graphql=com.fasterxml.jackson.databind
+            --add-opens fr.ght1pc9kc.entity.jackson/fr.ght1pc9kc.entity.jackson.samples=tools.jackson.databind
+            --add-opens fr.ght1pc9kc.entity.jackson/fr.ght1pc9kc.entity.jackson.samples=ALL-UNNAMED
         </surefire.argline.opens>
     </properties>
 
@@ -23,22 +25,27 @@
             <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>fr.ght1pc9kc</groupId>
-            <artifactId>entity-jackson</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.graphql-java</groupId>
-            <artifactId>graphql-java</artifactId>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>tools.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
         </dependency>
 
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -52,8 +59,13 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>com.fasterxml.jackson.datatype</groupId>
-            <artifactId>jackson-datatype-jsr310</artifactId>
+            <groupId>net.javacrumbs.json-unit</groupId>
+            <artifactId>json-unit-assertj</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
             <scope>test</scope>
         </dependency>
     </dependencies>

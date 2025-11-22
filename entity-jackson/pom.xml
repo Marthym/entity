@@ -4,7 +4,7 @@
     <parent>
         <groupId>fr.ght1pc9kc</groupId>
         <artifactId>entity</artifactId>
-        <version>1.3.4-SNAPSHOT</version>
+        <version>1.4.0-SNAPSHOT</version>
     </parent>
 
     <name>Entity for Jackson</name>
