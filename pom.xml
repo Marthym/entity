@@ -29,6 +29,7 @@
     <modules>
         <module>entity-api</module>
         <module>entity-jackson</module>
+        <module>entity-jackson-3</module>
         <module>entity-graphql</module>
     </modules>
 
@@ -37,7 +38,8 @@
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <jackson.version>2.19.1</jackson.version>
+        <jackson-2.version>2.19.1</jackson-2.version>
+        <jackson-3.version>3.0.2</jackson-3.version>
         <lombok.version>1.18.38</lombok.version>
         <jspecify.version>1.0.0</jspecify.version>
         <slf4j.version>2.0.17</slf4j.version>
@@ -83,16 +85,26 @@
                 <version>${jspecify.version}</version>
                 <optional>true</optional>
             </dependency>
+
+            <!-- JACKSON 3-->
+            <dependency>
+                <groupId>tools.jackson.core</groupId>
+                <artifactId>jackson-databind</artifactId>
+                <version>${jackson-3.version}</version>
+            </dependency>
+
+            <!-- JACKSON 2-->
             <dependency>
                 <groupId>com.fasterxml.jackson.core</groupId>
                 <artifactId>jackson-databind</artifactId>
-                <version>${jackson.version}</version>
+                <version>${jackson-2.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.fasterxml.jackson.datatype</groupId>
                 <artifactId>jackson-datatype-jsr310</artifactId>
-                <version>${jackson.version}</version>
+                <version>${jackson-2.version}</version>
             </dependency>
+
             <dependency>
                 <groupId>com.graphql-java</groupId>
                 <artifactId>graphql-java</artifactId>

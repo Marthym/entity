@@ -27,14 +27,19 @@ Use the package manager [maven](https://maven.apache.org/) to install entity.
     <version>VERSION</version>
 </dependency>
 <dependency>
-    <groupId>fr.ght1pc9kc</groupId>
-    <artifactId>entity-jackson</artifactId>
-    <version>VERSION</version>
+<groupId>fr.ght1pc9kc</groupId>
+<artifactId>entity-jackson</artifactId>
+<version>VERSION</version>
 </dependency>
 <dependency>
-    <groupId>fr.ght1pc9kc</groupId>
-    <artifactId>entity-graphql</artifactId>
-    <version>VERSION</version>
+<groupId>fr.ght1pc9kc</groupId>
+<artifactId>entity-jackson-3</artifactId>
+<version>VERSION</version>
+</dependency>
+<dependency>
+<groupId>fr.ght1pc9kc</groupId>
+<artifactId>entity-graphql</artifactId>
+<version>VERSION</version>
 </dependency>
 ```
 
@@ -52,6 +57,7 @@ compile "fr.ght1pc9kc:entity-graphql:VERSION"
 
 ```java
 import fr.ght1pc9kc.entity.api.Entity;
+
 import java.time.Instant;
 
 import static fr.ght1pc9kc.demo.DefaultMeta.createdBy;
@@ -74,7 +80,7 @@ Entity<Saber> POLYMORPHIC_ENTITY = Entity
         .withId("LIGHTSABER");
 ```
 
-### Include Jackson module
+### Include Jackson 2 module
 
 ```java
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -102,11 +108,39 @@ more beautiful json.
 }
 ```
 
-### Use GrapQL DataFetcher module
-
-In Spring Boot, create a configuration classe into your module 
+### Include Jackson 3 module
 
 ```java
+import tools.jackson.databind.ObjectMapper;
+import tools.jackson.databind.cfg.DateTimeFeature;
+import tools.jackson.databind.json.JsonMapper;
+import fr.ght1pc9kc.entity.jackson.EntityModule;
+
+ObjectMapper mapper = JsonMapper.builder()
+        .disable(DateTimeFeature.WRITE_DATES_AS_TIMESTAMPS)
+        .addModule(new EntityModule())
+        .build();
+```
+
+Since jackson 3, `JavaTimeModule` is built-in and does not need to be registered.
+
+```json
+{
+  "_id": "LIGHTSABER",
+  "_createdAt": "2024-01-20T15:06:42.546Z",
+  "_createdBy": "okenobi",
+  "@type": "LIGHT",
+  "blade": 1,
+  "color": "GREEN"
+}
+```
+
+### Use GraphQL DataFetcher module
+
+In Spring Boot, create a configuration class into your module
+
+```java
+
 @Slf4j
 @Configuration
 public class MyObjectEntityConfiguration {
