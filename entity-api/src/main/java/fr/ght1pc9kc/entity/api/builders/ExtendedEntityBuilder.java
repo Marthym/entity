@@ -3,7 +3,7 @@ package fr.ght1pc9kc.entity.api.builders;
 import fr.ght1pc9kc.entity.api.Entity;
 import fr.ght1pc9kc.entity.api.impl.BasicEntity;
 import fr.ght1pc9kc.entity.api.impl.ExtendedEntity;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NonNull;
 
 import java.util.EnumMap;
 import java.util.Objects;
@@ -43,7 +43,7 @@ public final class ExtendedEntityBuilder<T, E extends Enum<E>> {
      * @param id Identifier of the entity
      * @return The Entity
      */
-    public Entity<T> withId(@NotNull String id) {
+    public Entity<T> withId(@NonNull String id) {
         Objects.requireNonNull(id, "ID is mandatory for Entity !");
         if (this.metas.isEmpty()) {
             return new BasicEntity<>(id, this.self);

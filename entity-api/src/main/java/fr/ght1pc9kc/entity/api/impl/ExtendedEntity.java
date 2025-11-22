@@ -2,16 +2,16 @@ package fr.ght1pc9kc.entity.api.impl;
 
 import fr.ght1pc9kc.entity.api.Entity;
 import fr.ght1pc9kc.entity.api.builders.ExtendedEntityBuilder;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NonNull;
 
 import java.util.EnumMap;
 import java.util.Optional;
 import java.util.function.Function;
 
 public record ExtendedEntity<T, E extends Enum<E>>(
-        @NotNull String id,
-        @NotNull EnumMap<E, Object> metas,
-        @NotNull T self
+        @NonNull String id,
+        @NonNull EnumMap<E, Object> metas,
+        @NonNull T self
 ) implements Entity<T> {
     public ExtendedEntity {
         metas = new EnumMap<>(metas);

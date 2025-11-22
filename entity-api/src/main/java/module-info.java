@@ -3,7 +3,7 @@
  */
 module fr.ght1pc9kc.entity.api {
     requires static lombok;
-    requires static org.jetbrains.annotations;
+    requires static org.jspecify;
 
     exports fr.ght1pc9kc.entity.api;
     exports fr.ght1pc9kc.entity.api.impl;
