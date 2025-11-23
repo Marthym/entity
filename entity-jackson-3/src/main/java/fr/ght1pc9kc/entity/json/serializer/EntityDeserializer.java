@@ -1,20 +1,19 @@
-package fr.ght1pc9kc.entity.jackson.serializer;
+package fr.ght1pc9kc.entity.json.serializer;
 
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.JsonToken;
-import com.fasterxml.jackson.databind.DeserializationContext;
-import com.fasterxml.jackson.databind.JavaType;
-import com.fasterxml.jackson.databind.JsonDeserializer;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import fr.ght1pc9kc.entity.api.Entity;
 import fr.ght1pc9kc.entity.api.TypedMeta;
 import fr.ght1pc9kc.entity.api.impl.BasicEntity;
 import fr.ght1pc9kc.entity.api.impl.ExtendedEntity;
-import fr.ght1pc9kc.entity.jackson.EntityModuleConstant;
-import fr.ght1pc9kc.entity.jackson.ex.EntityDeserializationException;
+import fr.ght1pc9kc.entity.json.EntityModuleConstant;
+import fr.ght1pc9kc.entity.json.ex.EntityDeserializationException;
+import tools.jackson.core.JsonParser;
+import tools.jackson.core.JsonToken;
+import tools.jackson.databind.DeserializationContext;
+import tools.jackson.databind.JavaType;
+import tools.jackson.databind.JsonNode;
+import tools.jackson.databind.ValueDeserializer;
+import tools.jackson.databind.node.ObjectNode;
 
-import java.io.IOException;
 import java.util.EnumMap;
 import java.util.Optional;
 
@@ -32,11 +31,11 @@ import java.util.Optional;
  *
  * @param <T> The type of {@code self} object in {@link Entity}
  */
-public class EntityDeserializer<T> extends JsonDeserializer<Entity<T>> {
-    private final JsonDeserializer<Object> selfDeserializer;
+public class EntityDeserializer<T> extends ValueDeserializer<Entity<T>> {
+    private final ValueDeserializer<Object> selfDeserializer;
     private final JavaType metaEnum;
 
-    public EntityDeserializer(JavaType metaEnum, JsonDeserializer<Object> selfDeserializer) {
+    public EntityDeserializer(JavaType metaEnum, ValueDeserializer<Object> selfDeserializer) {
         this.selfDeserializer = selfDeserializer;
         this.metaEnum = metaEnum;
     }
@@ -46,14 +45,12 @@ public class EntityDeserializer<T> extends JsonDeserializer<Entity<T>> {
      * @param ctxt Context that can be used to access information about
      *             this deserialization activity.
      * @return The serialized {@link BasicEntity} or {@link ExtendedEntity} depending on the context
-     * @throws IOException                    when not valid json
      * @throws EntityDeserializationException when {@code _id} is absent
      */
     @Override
     @SuppressWarnings("unchecked")
-    public Entity<T> deserialize(JsonParser jp, DeserializationContext ctxt)
-            throws IOException {
-        JsonToken currentToken = jp.getCurrentToken();
+    public Entity<T> deserialize(JsonParser jp, DeserializationContext ctxt) {
+        JsonToken currentToken = jp.currentToken();
 
         if (currentToken != JsonToken.START_OBJECT) {
             throw ctxt.wrongTokenException(jp, (JavaType) null, JsonToken.START_OBJECT, "Bad token");
@@ -72,13 +69,13 @@ public class EntityDeserializer<T> extends JsonDeserializer<Entity<T>> {
         });
 
         String id = Optional.ofNullable(treeNode.remove(EntityModuleConstant.IDENTIFIER))
-                .map(JsonNode::asText)
+                .map(JsonNode::asString)
                 .orElseThrow(() -> new EntityDeserializationException(EntityModuleConstant.IDENTIFIER + " is mandatory for Entity"));
 
         JsonNode selfNode = entityNode.get(EntityModuleConstant.SELF_PROPERTY);
         JsonNode selfContainedNode = (selfNode == null) ? wrappedNode : selfNode;
 
-        JsonParser subParser = selfContainedNode.traverse(jp.getCodec());
+        JsonParser subParser = selfContainedNode.traverse(jp.objectReadContext());
         subParser.nextToken();
         T wrapped = (T) selfDeserializer.deserialize(subParser, ctxt);
 
@@ -101,15 +98,12 @@ public class EntityDeserializer<T> extends JsonDeserializer<Entity<T>> {
             if (fieldValue != null) {
                 if (isTyped) {
                     Class<?> clazz = ((TypedMeta) enumConstant).type();
-                    try (JsonParser valueParser = fieldValue.traverse()) {
-                        valueParser.setCodec(jp.getCodec());
+                    try (JsonParser valueParser = fieldValue.traverse(jp.objectReadContext())) {
                         Object value = valueParser.readValueAs(clazz);
                         metas.put(key, value);
-                    } catch (IOException e) {
-                        throw new EntityDeserializationException("Unable to deserialize meta " + key.name(), e);
                     }
                 } else {
-                    metas.put(key, fieldValue.asText());
+                    metas.put(key, fieldValue.asString());
                 }
             }
         }

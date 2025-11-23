@@ -4,7 +4,7 @@
 
     <groupId>fr.ght1pc9kc</groupId>
     <artifactId>entity</artifactId>
-    <version>1.3.3</version>
+    <version>1.5.0</version>
     <packaging>pom</packaging>
 
     <name>Entity</name>
@@ -22,12 +22,13 @@
         <connection>scm:git:git@github.com:Marthym/entity.git</connection>
         <developerConnection>scm:git:git@github.com:Marthym/entity.git</developerConnection>
         <url>https://github.com/Marthym/entity</url>
-        <tag>1.3.3</tag>
+        <tag>1.5.0</tag>
     </scm>
 
     <modules>
         <module>entity-api</module>
         <module>entity-jackson</module>
+        <module>entity-jackson-3</module>
         <module>entity-graphql</module>
     </modules>
 
@@ -36,29 +37,31 @@
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <jackson.version>2.19.1</jackson.version>
-        <jetbrains-annotations.version>26.0.2</jetbrains-annotations.version>
+        <jackson-2.version>2.20.1</jackson-2.version>
+        <jackson-3.version>3.0.2</jackson-3.version>
         <lombok.version>1.18.38</lombok.version>
+        <jspecify.version>1.0.0</jspecify.version>
         <slf4j.version>2.0.17</slf4j.version>
         <graphql.version>24.1</graphql.version>
 
-        <assertj.version>3.27.3</assertj.version>
-        <junit.version>5.13.3</junit.version>
-        <json-unit-assertj.version>4.1.1</json-unit-assertj.version>
-        <logback.version>1.5.18</logback.version>
+        <assertj.version>3.27.6</assertj.version>
+        <junit.version>6.0.1</junit.version>
+        <json-unit-assertj.version>5.1.0</json-unit-assertj.version>
+        <logback.version>1.5.21</logback.version>
 
-        <jacoco-maven-plugin.version>0.8.13</jacoco-maven-plugin.version>
-        <maven-compiler-plugin.version>3.14.0</maven-compiler-plugin.version>
-        <maven-dependency-plugin.version>3.8.1</maven-dependency-plugin.version>
+        <jacoco-maven-plugin.version>0.8.14</jacoco-maven-plugin.version>
+        <maven-compiler-plugin.version>3.14.1</maven-compiler-plugin.version>
+        <maven-dependency-plugin.version>3.9.0</maven-dependency-plugin.version>
         <maven-deploy-plugin.version>3.1.4</maven-deploy-plugin.version>
         <maven-gpg-plugin.version>3.2.8</maven-gpg-plugin.version>
-        <maven-javadoc-plugin.version>3.11.2</maven-javadoc-plugin.version>
-        <maven-release-plugin.version>3.1.1</maven-release-plugin.version>
-        <maven-scm-api.version>2.1.0</maven-scm-api.version>
-        <maven-scm-provider-gitexe.version>2.1.0</maven-scm-provider-gitexe.version>
+        <maven-javadoc-plugin.version>3.12.0</maven-javadoc-plugin.version>
+        <maven-release-plugin.version>3.2.0</maven-release-plugin.version>
+        <maven-scm-api.version>2.2.1</maven-scm-api.version>
+        <maven-scm-provider-gitexe.version>2.2.1</maven-scm-provider-gitexe.version>
         <maven-source-plugin.version>3.3.1</maven-source-plugin.version>
-        <maven-surefire-plugin.version>3.5.3</maven-surefire-plugin.version>
-        <central-publishing-maven-plugin.version>0.8.0</central-publishing-maven-plugin.version>
+        <maven-surefire-plugin.version>3.5.4</maven-surefire-plugin.version>
+        <central-publishing-maven-plugin.version>0.9.0</central-publishing-maven-plugin.version>
+        <sonar-maven-plugin.version>5.3.0.6276</sonar-maven-plugin.version>
 
         <surefire.argline.opens />
     </properties>
@@ -77,20 +80,31 @@
                 <version>${slf4j.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.jetbrains</groupId>
-                <artifactId>annotations</artifactId>
-                <version>${jetbrains-annotations.version}</version>
+                <groupId>org.jspecify</groupId>
+                <artifactId>jspecify</artifactId>
+                <version>${jspecify.version}</version>
+                <optional>true</optional>
             </dependency>
+
+            <!-- JACKSON 3-->
+            <dependency>
+                <groupId>tools.jackson.core</groupId>
+                <artifactId>jackson-databind</artifactId>
+                <version>${jackson-3.version}</version>
+            </dependency>
+
+            <!-- JACKSON 2-->
             <dependency>
                 <groupId>com.fasterxml.jackson.core</groupId>
                 <artifactId>jackson-databind</artifactId>
-                <version>${jackson.version}</version>
+                <version>${jackson-2.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.fasterxml.jackson.datatype</groupId>
                 <artifactId>jackson-datatype-jsr310</artifactId>
-                <version>${jackson.version}</version>
+                <version>${jackson-2.version}</version>
             </dependency>
+
             <dependency>
                 <groupId>com.graphql-java</groupId>
                 <artifactId>graphql-java</artifactId>
@@ -208,6 +222,11 @@
             </properties>
             <build>
                 <plugins>
+                    <plugin>
+                        <groupId>org.sonarsource.scanner.maven</groupId>
+                        <artifactId>sonar-maven-plugin</artifactId>
+                        <version>${sonar-maven-plugin.version}</version>
+                    </plugin>
                     <plugin>
                         <groupId>org.jacoco</groupId>
                         <artifactId>jacoco-maven-plugin</artifactId>

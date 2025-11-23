@@ -3,7 +3,7 @@ package fr.ght1pc9kc.entity.api;
 import fr.ght1pc9kc.entity.api.builders.BasicEntityBuilder;
 import fr.ght1pc9kc.entity.api.impl.BasicEntity;
 import fr.ght1pc9kc.entity.api.impl.ExtendedEntity;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NonNull;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -36,7 +36,7 @@ public sealed interface Entity<T> permits BasicEntity, ExtendedEntity {
      * @param <T>    The type of the self-contained Entity object
      * @return The Entity, identified with ID
      */
-    static <T> BasicEntityBuilder<T> identify(@NotNull T entity) {
+    static <T> BasicEntityBuilder<T> identify(@NonNull T entity) {
         return new BasicEntityBuilder<>(Objects.requireNonNull(entity, "Self entity must not be null !"));
     }
 }

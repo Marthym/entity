@@ -1,18 +1,18 @@
-package fr.ght1pc9kc.entity.jackson;
+package fr.ght1pc9kc.entity.json;
 
-import com.fasterxml.jackson.core.Version;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.core.util.VersionUtil;
-import com.fasterxml.jackson.databind.Module;
-import com.fasterxml.jackson.databind.module.SimpleDeserializers;
-import com.fasterxml.jackson.databind.module.SimpleSerializers;
 import fr.ght1pc9kc.entity.api.Entity;
 import fr.ght1pc9kc.entity.api.impl.BasicEntity;
 import fr.ght1pc9kc.entity.api.impl.ExtendedEntity;
-import fr.ght1pc9kc.entity.jackson.serializer.EntityContextualDeserializer;
-import fr.ght1pc9kc.entity.jackson.serializer.EntitySerializer;
+import fr.ght1pc9kc.entity.json.serializer.EntityContextualDeserializer;
+import fr.ght1pc9kc.entity.json.serializer.EntitySerializer;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import tools.jackson.core.Version;
+import tools.jackson.core.type.TypeReference;
+import tools.jackson.core.util.VersionUtil;
+import tools.jackson.databind.JacksonModule;
+import tools.jackson.databind.module.SimpleDeserializers;
+import tools.jackson.databind.module.SimpleSerializers;
 
 import java.util.List;
 import java.util.Map;
@@ -22,12 +22,12 @@ import java.util.Map;
  *
  * <h2>Deserialization</h2>
  * <p>Manage the {@link Entity} deserialization.</p>
- * <p>All fields starting with "{@code _}" are considered as meta-data and will be used for Entity,
+ * <p>All fields starting with "{@code _}" are considered as meta data and will be used for Entity,
  * all other fields are considered to belong to the self object</p>
  *
  * <h2>Serialization</h2>
  * <p>{@link Entity#self()} was serialized as <strong>unwrapped</strong> object. All properties from Entity were considered
- * as meta-data and were prefixed with {@code _}, properties from self object were serialized at the same leve "as is".</p>
+ * as meta-data and were prefixed with {@code _}, properties from self object was serialized at the same leve "as is".</p>
  * <p>All Jackson annotations on the {@code self} object was read and used.</p>
  * <p>This serializer avoid Jackson problems of using {@link com.fasterxml.jackson.annotation.JsonTypeInfo} inside an
  * object annotated with {@link com.fasterxml.jackson.annotation.JsonUnwrapped}</p>
@@ -65,7 +65,7 @@ import java.util.Map;
  */
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public class EntityModule extends Module {
+public class EntityModule extends JacksonModule {
     @Override
     public String getModuleName() {
         return EntityModule.class.getSimpleName();
@@ -73,7 +73,7 @@ public class EntityModule extends Module {
 
     @Override
     public Version version() {
-        return VersionUtil.parseVersion("1.0.0", EntityModule.class.getPackageName(), "jackson-entity-module");
+        return VersionUtil.parseVersion("1.1.0", EntityModule.class.getPackageName(), "jackson-entity-module");
     }
 
     @Override
@@ -85,11 +85,11 @@ public class EntityModule extends Module {
                 ExtendedEntity.class, deserializer
         )));
         context.addSerializers(new SimpleSerializers(List.of(
-                new EntitySerializer<>(context.getTypeFactory().constructType(new TypeReference<Entity<?>>() {
+                new EntitySerializer<>(context.typeFactory().constructType(new TypeReference<Entity<?>>() {
                 })),
-                new EntitySerializer<>(context.getTypeFactory().constructType(new TypeReference<BasicEntity<?>>() {
+                new EntitySerializer<>(context.typeFactory().constructType(new TypeReference<BasicEntity<?>>() {
                 })),
-                new EntitySerializer<>(context.getTypeFactory().constructType(new TypeReference<ExtendedEntity<?, ? extends Enum<?>>>() {
+                new EntitySerializer<>(context.typeFactory().constructType(new TypeReference<ExtendedEntity<?, ? extends Enum<?>>>() {
                 }))
         )));
     }

@@ -7,17 +7,30 @@
         <version>1.5.0</version>
     </parent>
 
-    <name>Entity API</name>
-    <artifactId>entity-api</artifactId>
+    <name>Entity for Jackson 3</name>
+    <artifactId>entity-jackson-3</artifactId>
+
+    <properties>
+        <surefire.argline.opens>
+            --add-opens fr.ght1pc9kc.entity.json/fr.ght1pc9kc.entity.json.samples=tools.jackson.databind
+            --add-opens fr.ght1pc9kc.entity.json/fr.ght1pc9kc.entity.json.samples=ALL-UNNAMED
+        </surefire.argline.opens>
+    </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>fr.ght1pc9kc</groupId>
+            <artifactId>entity-api</artifactId>
+            <version>${project.version}</version>
+        </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
         </dependency>
+
         <dependency>
-            <groupId>org.jspecify</groupId>
-            <artifactId>jspecify</artifactId>
+            <groupId>tools.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
         </dependency>
 
         <dependency>
@@ -38,6 +51,16 @@
         <dependency>
             <groupId>org.assertj</groupId>
             <artifactId>assertj-core</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>net.javacrumbs.json-unit</groupId>
+            <artifactId>json-unit-assertj</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
             <scope>test</scope>
         </dependency>
     </dependencies>
