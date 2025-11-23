@@ -1,6 +1,6 @@
-package fr.ght1pc9kc.entity.jackson.serializer;
+package fr.ght1pc9kc.entity.json.serializer;
 
-import fr.ght1pc9kc.entity.jackson.EntityModule;
+import fr.ght1pc9kc.entity.json.EntityModule;
 import net.javacrumbs.jsonunit.assertj.JsonAssertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -21,7 +21,7 @@ class EntitySerializerTest {
     }
 
     @ParameterizedTest(name = "[{index}] {0}")
-    @MethodSource("fr.ght1pc9kc.entity.jackson.samples.Samples#providerForDeserializedSerialized")
+    @MethodSource("fr.ght1pc9kc.entity.json.samples.Samples#providerForDeserializedSerialized")
     void should_serialize_polymorphic_entity(Object entity, Object ignore, String expectedJson) {
         String actual = this.tested.writerWithDefaultPrettyPrinter()
                 .writeValueAsString(entity);

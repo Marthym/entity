@@ -1,4 +1,4 @@
-package fr.ght1pc9kc.entity.jackson.samples;
+package fr.ght1pc9kc.entity.json.samples;
 
 
 import fr.ght1pc9kc.entity.api.Entity;
@@ -10,8 +10,8 @@ import java.time.Instant;
 import java.util.List;
 import java.util.stream.Stream;
 
-import static fr.ght1pc9kc.entity.jackson.samples.DefaultMetaProperties.createdAt;
-import static fr.ght1pc9kc.entity.jackson.samples.DefaultMetaProperties.createdBy;
+import static fr.ght1pc9kc.entity.json.samples.DefaultMetaProperties.createdAt;
+import static fr.ght1pc9kc.entity.json.samples.DefaultMetaProperties.createdBy;
 
 @SuppressWarnings("unused")
 public abstract class Samples {

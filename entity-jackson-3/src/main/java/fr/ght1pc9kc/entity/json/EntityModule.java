@@ -1,10 +1,10 @@
-package fr.ght1pc9kc.entity.jackson;
+package fr.ght1pc9kc.entity.json;
 
 import fr.ght1pc9kc.entity.api.Entity;
 import fr.ght1pc9kc.entity.api.impl.BasicEntity;
 import fr.ght1pc9kc.entity.api.impl.ExtendedEntity;
-import fr.ght1pc9kc.entity.jackson.serializer.EntityContextualDeserializer;
-import fr.ght1pc9kc.entity.jackson.serializer.EntitySerializer;
+import fr.ght1pc9kc.entity.json.serializer.EntityContextualDeserializer;
+import fr.ght1pc9kc.entity.json.serializer.EntitySerializer;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import tools.jackson.core.Version;

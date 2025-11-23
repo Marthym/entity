@@ -1,8 +1,8 @@
-package fr.ght1pc9kc.entity.jackson.serializer;
+package fr.ght1pc9kc.entity.json.serializer;
 
 import fr.ght1pc9kc.entity.api.Entity;
 import fr.ght1pc9kc.entity.api.impl.ExtendedEntity;
-import fr.ght1pc9kc.entity.jackson.EntityModuleConstant;
+import fr.ght1pc9kc.entity.json.EntityModuleConstant;
 import tools.jackson.core.JsonGenerator;
 import tools.jackson.databind.JavaType;
 import tools.jackson.databind.JsonNode;

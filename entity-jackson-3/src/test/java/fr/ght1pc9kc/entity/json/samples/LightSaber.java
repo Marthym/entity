@@ -1,4 +1,4 @@
-package fr.ght1pc9kc.entity.jackson.samples;
+package fr.ght1pc9kc.entity.json.samples;
 
 public record LightSaber(
         Color color,

@@ -13,8 +13,8 @@
 
     <properties>
         <surefire.argline.opens>
-            --add-opens fr.ght1pc9kc.entity.jackson/fr.ght1pc9kc.entity.jackson.samples=tools.jackson.databind
-            --add-opens fr.ght1pc9kc.entity.jackson/fr.ght1pc9kc.entity.jackson.samples=ALL-UNNAMED
+            --add-opens fr.ght1pc9kc.entity.json/fr.ght1pc9kc.entity.json.samples=tools.jackson.databind
+            --add-opens fr.ght1pc9kc.entity.json/fr.ght1pc9kc.entity.json.samples=ALL-UNNAMED
         </surefire.argline.opens>
     </properties>
 

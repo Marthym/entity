@@ -1,6 +1,6 @@
-package fr.ght1pc9kc.entity.jackson.serializer;
+package fr.ght1pc9kc.entity.json.serializer;
 
-import fr.ght1pc9kc.entity.jackson.EntityModule;
+import fr.ght1pc9kc.entity.json.EntityModule;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -22,7 +22,7 @@ class EntityDeserializerTest {
     }
 
     @ParameterizedTest(name = "[{index}] {0}")
-    @MethodSource("fr.ght1pc9kc.entity.jackson.samples.Samples#providerForDeserializedSerialized")
+    @MethodSource("fr.ght1pc9kc.entity.json.samples.Samples#providerForDeserializedSerialized")
     void should_deserialize_entity(Object value, TypeReference<?> type, String json) {
         Object actual = this.tested.readValue(json, type);
 

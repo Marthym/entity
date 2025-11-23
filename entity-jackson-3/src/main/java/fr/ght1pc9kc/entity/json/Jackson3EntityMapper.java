@@ -1,4 +1,4 @@
-package fr.ght1pc9kc.entity.jackson;
+package fr.ght1pc9kc.entity.json;
 
 import fr.ght1pc9kc.entity.api.Entity;
 import fr.ght1pc9kc.entity.api.mapper.EntityMapper;

@@ -1,4 +1,4 @@
-package fr.ght1pc9kc.entity.jackson.ex;
+package fr.ght1pc9kc.entity.json.ex;
 
 public class EntitySerializationException extends RuntimeException {
     public EntitySerializationException(String message, Throwable cause) {

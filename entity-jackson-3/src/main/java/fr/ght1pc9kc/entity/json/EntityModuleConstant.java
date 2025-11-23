@@ -1,4 +1,4 @@
-package fr.ght1pc9kc.entity.jackson;
+package fr.ght1pc9kc.entity.json;
 
 import lombok.experimental.UtilityClass;
 

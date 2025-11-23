@@ -1,11 +1,11 @@
-package fr.ght1pc9kc.entity.jackson.serializer;
+package fr.ght1pc9kc.entity.json.serializer;
 
 import fr.ght1pc9kc.entity.api.Entity;
 import fr.ght1pc9kc.entity.api.TypedMeta;
 import fr.ght1pc9kc.entity.api.impl.BasicEntity;
 import fr.ght1pc9kc.entity.api.impl.ExtendedEntity;
-import fr.ght1pc9kc.entity.jackson.EntityModuleConstant;
-import fr.ght1pc9kc.entity.jackson.ex.EntityDeserializationException;
+import fr.ght1pc9kc.entity.json.EntityModuleConstant;
+import fr.ght1pc9kc.entity.json.ex.EntityDeserializationException;
 import tools.jackson.core.JsonParser;
 import tools.jackson.core.JsonToken;
 import tools.jackson.databind.DeserializationContext;

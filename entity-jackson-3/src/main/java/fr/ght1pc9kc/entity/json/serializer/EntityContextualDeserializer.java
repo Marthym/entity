@@ -1,4 +1,4 @@
-package fr.ght1pc9kc.entity.jackson.serializer;
+package fr.ght1pc9kc.entity.json.serializer;
 
 
 import tools.jackson.core.JsonParser;

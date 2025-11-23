@@ -1,7 +1,7 @@
 /**
- * Jackson module to add serializer and deserializer for Entity
+ * Jackson 3 module to add serializer and deserializer for Entity
  */
-module fr.ght1pc9kc.entity.jackson {
+module fr.ght1pc9kc.entity.json {
     requires fr.ght1pc9kc.entity.api;
 
     requires static lombok;
@@ -9,5 +9,5 @@ module fr.ght1pc9kc.entity.jackson {
     requires tools.jackson.core;
     requires tools.jackson.databind;
 
-    exports fr.ght1pc9kc.entity.jackson;
+    exports fr.ght1pc9kc.entity.json;
 }

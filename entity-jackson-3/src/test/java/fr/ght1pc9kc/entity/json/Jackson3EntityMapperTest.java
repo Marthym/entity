@@ -1,4 +1,4 @@
-package fr.ght1pc9kc.entity.jackson;
+package fr.ght1pc9kc.entity.json;
 
 import fr.ght1pc9kc.entity.api.Entity;
 import org.assertj.core.api.Assertions;
@@ -23,7 +23,7 @@ class Jackson3EntityMapperTest {
     }
 
     @ParameterizedTest(name = "[{index}] {0}")
-    @MethodSource("fr.ght1pc9kc.entity.jackson.samples.Samples#providerForDeserializedSerialized")
+    @MethodSource("fr.ght1pc9kc.entity.json.samples.Samples#providerForDeserializedSerialized")
     void should_convert_value_to_map(Object obj, Object ignore, String expectedJson) {
         if (obj instanceof Entity<?> entity) {
             Assertions.assertThat(tested.toMap(entity))
