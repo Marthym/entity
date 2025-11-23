@@ -63,7 +63,7 @@ public class EntityDeserializer<T> extends JsonDeserializer<Entity<T>> {
         ObjectNode entityNode = ctxt.getNodeFactory().objectNode();
         ObjectNode wrappedNode = ctxt.getNodeFactory().objectNode();
 
-        treeNode.fields().forEachRemaining(entry -> {
+        treeNode.properties().forEach(entry -> {
             if (entry.getKey().startsWith(EntityModuleConstant.META_PREFIX)) {
                 entityNode.set(entry.getKey(), entry.getValue());
             } else {
