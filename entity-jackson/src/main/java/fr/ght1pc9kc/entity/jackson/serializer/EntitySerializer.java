@@ -35,7 +35,7 @@ public class EntitySerializer<T> extends StdSerializer<Entity<T>> {
 
         JsonNode self = ((ObjectMapper) jgen.getCodec()).valueToTree(value.self());
         if (self.isObject()) {
-            self.fields().forEachRemaining(e -> {
+            self.properties().forEach(e -> {
                 try {
                     jgen.writeObjectField(e.getKey(), e.getValue());
                 } catch (IOException ex) {

@@ -5,7 +5,6 @@ module fr.ght1pc9kc.entity.jackson {
     requires fr.ght1pc9kc.entity.api;
 
     requires static lombok;
-    requires org.slf4j;
 
     requires tools.jackson.core;
     requires tools.jackson.databind;
