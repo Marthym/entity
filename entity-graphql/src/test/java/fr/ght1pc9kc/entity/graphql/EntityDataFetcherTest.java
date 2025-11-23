@@ -23,7 +23,9 @@ class EntityDataFetcherTest {
 
     @BeforeEach
     void setUp() {
-        tested = EntityDataFetcher.builder().build();
+        tested = EntityDataFetcher.builder()
+                .mapper()
+                .build();
     }
 
     @ParameterizedTest(name = "[{index}] field with expected value {1}")
